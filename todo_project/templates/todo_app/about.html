@@ -1,0 +1,53 @@
+{% extends "todo_app/base.html" %}
+{% block title %}About{% endblock title %}
+{% block navlink %}
+<li class="nav-item">
+  <a class="nav-link" aria-current="page" href="{% url 'index'%}">Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" href="{% url 'about'%}">About</a>
+</li>
+{% endblock navlink %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4 "><center>TO-DO LIST</center></h1>
+    <p class="lead">
+      <center>
+        This is a modified jumbotron that occupies the entire horizontal
+        space of its parent.
+      </center>
+    </p>
+    <p class="lead">
+      <center>
+        This is a modified jumbotron that occupies the entire horizontal
+        space of its parent.
+      </center>
+    </p>
+    <p class="lead">
+      <center>
+        This is a modified jumbotron that occupies the entire horizontal
+        space of its parent.
+      </center>
+    </p>
+    <p class="lead">
+      <center>
+        This is a modified jumbotron that occupies the entire horizontal
+        space of its parent.
+      </center>
+    </p>
+    {% block creater %}
+    
+    <center>
+      <div>
+        
+        <a href="{%url 'create'%}"
+        class="btn btn-outline-warning" role="button">
+        Add New To-Do
+      </a>
+    </div>
+  </center>
+  {% endblock creater %}
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,102 @@
+<style>
+  .notfinish{
+    color: white;
+    text-transform: uppercase;
+
+  }
+
+  .date{
+    color: rgb(140, 201, 255);
+    font-size: small;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+ .finish{
+  background-color: rgb(73, 73, 73);
+  color: darkslateblue;
+  font-size: medium;
+  font-weight: 500;
+  text-decoration: line-through;
+
+ } 
+</style>
+{% extends "todo_app/base.html" %}
+{% block title %}Home{% endblock title %}
+{% block navlink %}
+<li class="nav-item">
+  <a class="nav-link active" href="{% url 'index' %}" aria-current="page" >Home</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'about' %}">About</a>
+</li>
+{% endblock navlink %}
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4 "><center>TO-DO LIST</center></h1>
+    <p class="lead">
+      <center>
+        This is a modified jumbotron that occupies the entire horizontal
+        space of its parent.
+      </center>
+    </p>
+
+  </div>
+</div>
+<center>
+  <div>
+    {% block creater %}
+    
+    <center>
+      <div>
+        
+        <a href="{%url 'create' %}"
+        class="btn btn-outline-warning" role="button">
+        Add New To-Do
+      </a>
+    </div>
+  </center>
+  {% endblock creater %}
+</div>
+</center>
+<div class="mx-5">
+  <table class="table text-center font-weight-bold my-5 bg-dark bg-gradient">
+    <thead  class="text-uppercase font-weight-bold">
+      <tr class="fs-4">
+        <th scope="col"class="text-warning ">Title</th>
+        <th scope="col" class="text-primary">Description</th>
+        <th scope="col" class="text-light">Date - Time</th>
+        <th scope="col"class="text-info">Status</th>
+        <th scope="col"class="text-success">Update</th>
+        <th scope="col"class="text-danger">Delete</th>
+      </tr>
+    </thead>
+    <form method="POST">
+      {% csrf_token %}
+    <tbody>
+      {% for todo in todo_list  %}
+      
+      <tr class="fs-3 fw-bold">
+        {% if todo.finished %}
+        <td class="finish" >{{todo.title}}</td>
+        <td class="finish" >{{todo.description}}</td>
+        {% else %}
+        <td class="notfinish">{{todo.title}}</td>
+        <td class="notfinish">{{todo.description}}</td>
+        {% endif %}
+        <td class="date">{{ todo.date|date:"d/m/Y H:i:s" }}</td>
+
+        <td>
+         <a href="{% url 'toggle_finished' todo.id %}" role="button" type="submit" class="btn btn-outline-{{ todo.finished|yesno:'info,warning' }}">{{ todo.finished}}</a> 
+          {% comment %} <a href="{% url 'toggle_finished' todo.id %}" type="submit" class="btn btn-{{ todo.finished|yesno:'info,danger' }}">{{ todo.finished|yesno:"True,False" }}</a> {% endcomment %}
+        </td>
+        <td><a href="{% url 'update' todo.id %}" class="btn btn-success">Update</a></td>
+        <td><a href="{% url 'delete' todo.id %}" class="btn btn-danger">Delete</a></td>
+      </tr>
+      
+    </tbody>
+  </form>
+    {% endfor %}
+  </table>
+  </div>
+{% endblock content %}
